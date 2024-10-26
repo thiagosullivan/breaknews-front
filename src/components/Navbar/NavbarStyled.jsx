@@ -6,8 +6,6 @@ export const Nav = styled.nav`
     align-items: center;
     max-width: 100%;
     padding: 1rem;
-    /* position: fixed;
-    top: 0; */
     background-color: #ffffff;
     z-index: 1;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
@@ -25,7 +23,7 @@ export const InputSpace = styled.div`
     display: flex;
     align-items: center;
 
-    i {
+    button {
         position: absolute;
         top: 1;
         right: 0.2rem;
@@ -35,6 +33,13 @@ export const InputSpace = styled.div`
         color: #757575;
         border-radius: 0.3rem;
         padding: 0.5rem;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover{
+            background-color: #acacac;
+            color: #757575;
+        }
     }
 
     input {
