@@ -76,3 +76,13 @@ export const Button = styled.button`
         background-color: #0a86af;
     }
 `
+
+export const ErrorSpan = styled.span`
+    background-color: #ffaeae;
+    color: #9e0000;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+`
