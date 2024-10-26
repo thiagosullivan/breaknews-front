@@ -3,10 +3,11 @@ import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
 import { AuthContainer, ErrorSpan, Section } from "./AuthenticationStyled";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signinSchema } from "../../schemas/signinSchema";
 import { signupSchema } from "../../schemas/signupSchema";
 import { signup } from "../../services/userServices";
+import Cookies from "js-cookie";
 
 export function Authentication() {
   const {
@@ -14,26 +15,28 @@ export function Authentication() {
     handleSubmit: handleSubmitSignup,
     formState: { errors: errorsSignup },
   } = useForm({
-    resolver: zodResolver(signupSchema)
+    resolver: zodResolver(signupSchema),
   });
   const {
     register: registerSignin,
     handleSubmit: handleSubmitSignin,
     formState: { errors: errorsSignin },
   } = useForm({
-    resolver: zodResolver(signinSchema)
+    resolver: zodResolver(signinSchema),
   });
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  function inHandleSubmit(data){
-    console.log(data)
+  function inHandleSubmit(data) {
+    console.log(data);
   }
-  async function upHandleSubmit(data){
+  async function upHandleSubmit(data) {
     try {
-      const response = await signup(data)
-      console.log(response)
+      const response = await signup(data);
+      Cookies.set("token", response.data.token, { expires: 1 });
+      navigate("/");
+      console.log(response);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -48,15 +51,19 @@ export function Authentication() {
             name="email"
             register={registerSignin}
           />
-          {errorsSignin.email && <ErrorSpan>{errorsSignin.email.message}</ErrorSpan>}
+          {errorsSignin.email && (
+            <ErrorSpan>{errorsSignin.email.message}</ErrorSpan>
+          )}
           <Input
             type="password"
             placeholder="Senha"
             name="password"
             register={registerSignin}
           />
-          {errorsSignin.password && <ErrorSpan>{errorsSignin.password.message}</ErrorSpan>}
-          <Button type="submit" text="Entrar"/>
+          {errorsSignin.password && (
+            <ErrorSpan>{errorsSignin.password.message}</ErrorSpan>
+          )}
+          <Button type="submit" text="Entrar" />
         </form>
       </Section>
       <Section type="signup">
@@ -68,29 +75,37 @@ export function Authentication() {
             name="name"
             register={registerSignup}
           />
-          {errorsSignup.name && <ErrorSpan>{errorsSignup.name.message}</ErrorSpan>}
+          {errorsSignup.name && (
+            <ErrorSpan>{errorsSignup.name.message}</ErrorSpan>
+          )}
           <Input
             type="email"
             placeholder="E-mail"
             name="email"
             register={registerSignup}
           />
-          {errorsSignup.email && <ErrorSpan>{errorsSignup.email.message}</ErrorSpan>}
+          {errorsSignup.email && (
+            <ErrorSpan>{errorsSignup.email.message}</ErrorSpan>
+          )}
           <Input
             type="password"
             placeholder="Senha"
             name="password"
             register={registerSignup}
           />
-          {errorsSignup.password && <ErrorSpan>{errorsSignup.password.message}</ErrorSpan>}
+          {errorsSignup.password && (
+            <ErrorSpan>{errorsSignup.password.message}</ErrorSpan>
+          )}
           <Input
             type="password"
             placeholder="Confirmar Senha"
             name="confirmPassword"
             register={registerSignup}
           />
-          {errorsSignup.confirmPassword && <ErrorSpan>{errorsSignup.confirmPassword.message}</ErrorSpan>}
-          <Button type="submit" text="Cadastrar"/>
+          {errorsSignup.confirmPassword && (
+            <ErrorSpan>{errorsSignup.confirmPassword.message}</ErrorSpan>
+          )}
+          <Button type="submit" text="Cadastrar" />
         </form>
       </Section>
     </AuthContainer>
