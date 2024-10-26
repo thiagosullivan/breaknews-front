@@ -2,18 +2,9 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../images/logoBN.png";
 import { ErrorSpan, ImageLogo, InputSpace, Nav } from "./NavbarStyled";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../Button/Button";
-
-const searchSchema = z.object({
-  title: z
-    .string()
-    .min(1, { message: "A pesquisa não pode ser vazia." })
-    .refine((value) => !/^\s*$/.test(value), {
-      message: "A pesquisa não pode ter apenas espaço.",
-    }),
-});
+import { searchSchema } from "../../schemas/searchSchema";
 
 export function Navbar() {
   const {
