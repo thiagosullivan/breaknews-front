@@ -3,9 +3,10 @@ import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
 import { AuthContainer, ErrorSpan, Section } from "./AuthenticationStyled";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { signinSchema } from "../../schemas/signinSchema";
 import { signupSchema } from "../../schemas/signupSchema";
+import { signup } from "../../services/userServices";
 
 export function Authentication() {
   const {
@@ -22,13 +23,18 @@ export function Authentication() {
   } = useForm({
     resolver: zodResolver(signinSchema)
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   function inHandleSubmit(data){
     console.log(data)
   }
-  function upHandleSubmit(data){
-    console.log(data)
+  async function upHandleSubmit(data){
+    try {
+      const response = await signup(data)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
