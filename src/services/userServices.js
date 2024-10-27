@@ -19,3 +19,8 @@ function generateUserName(name){
     const randomNumber = Math.floor(Math.random() * 1000);
     return `${nameLowerCaseWithoutSpaces}-${randomNumber}`
 }
+
+export function signin(data){
+  const response = axios.post(`${baseURL}/auth/`, data);
+  return response;
+}
