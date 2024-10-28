@@ -1,7 +1,13 @@
 import Cookies from "js-cookie";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../images/logoBN.png";
-import { ErrorSpan, ImageLogo, InputSpace, Nav, UserLoggedSpace } from "./NavbarStyled";
+import {
+  ErrorSpan,
+  ImageLogo,
+  InputSpace,
+  Nav,
+  UserLoggedSpace,
+} from "./NavbarStyled";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../Button/Button";
@@ -36,6 +42,11 @@ export function Navbar() {
     }
   }
 
+  function signout() {
+    Cookies.remove("token");
+    setUser(undefined);
+    navigate("/");
+  }
 
   useEffect(() => {
     if (Cookies.get("token")) findUserLogged();
@@ -66,7 +77,7 @@ export function Navbar() {
             <Link to="/profile">
               <h2>{user.name}</h2>
             </Link>
-            <i className="bi bi-box-arrow-right"></i>
+            <i className="bi bi-box-arrow-right" onClick={signout}></i>
           </UserLoggedSpace>
         ) : (
           <Link to="/auth">
