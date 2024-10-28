@@ -13,6 +13,7 @@ import {
 } from "./ProfileStyled";
 import { getAllPostsByUser } from "../../services/postsServices";
 import { Card } from '../../components/Card/Card';
+import { Link } from "react-router-dom";
 
 export function Profile() {
   const { user } = useContext(UserContext);
@@ -44,9 +45,11 @@ export function Profile() {
         </ProfileUser>
 
         <ProfileActions>
-          <ProfileIconAdd>
-            <i className="bi bi-plus-circle"></i>
-          </ProfileIconAdd>
+          <Link to="/manage-news/add">
+            <ProfileIconAdd>
+              <i className="bi bi-plus-circle"></i>
+            </ProfileIconAdd>
+          </Link>
         </ProfileActions>
       </ProfileHeader>
 
