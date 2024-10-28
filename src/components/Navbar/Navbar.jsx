@@ -13,7 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../Button/Button";
 import { searchSchema } from "../../schemas/searchSchema";
 import { userLogged } from "../../services/userServices";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../../Context/UserContext";
 
 export function Navbar() {
   const {
@@ -25,7 +26,7 @@ export function Navbar() {
     resolver: zodResolver(searchSchema),
   });
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const { user, setUser } = useContext(UserContext);
 
   function onSearch(data) {
     const { title } = data;
