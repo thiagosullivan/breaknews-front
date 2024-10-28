@@ -11,9 +11,14 @@ export function Card({ top, title, text, likes, comments, banner, actions=false,
         <div>
           <CardHeader top={top}>
             { actions &&
-              <Link to={`/manage-news/edit/${id}`}>
-                <i className="bi bi-pencil-square"></i>
-              </Link>
+              <div>
+                <Link to={`/manage-news/edit/${id}`}>
+                  <i className="bi bi-pencil-square"></i>
+                </Link>
+                <Link to={`/manage-news/edit/${id}`}>
+                  <i className="bi bi-trash3"></i>
+                </Link>
+              </div>
             }
             <h2>{title}</h2>
             <TextLimit text={text} limit={150} />

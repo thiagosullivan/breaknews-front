@@ -53,3 +53,12 @@ export function editNews(body, id) {
   });
   return response;
 }
+
+export function deleteNews(id) {
+  const response = axios.delete(`${baseURL}/news/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+  });
+  return response;
+}

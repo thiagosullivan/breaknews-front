@@ -21,7 +21,7 @@ export function Profile() {
 
   async function findAllPostsByUser(){
     const postsResponse = await getAllPostsByUser();
-    console.log(postsResponse.data.results, 'POSTS')
+    // console.log(postsResponse.data.results, 'POSTS')
     setPosts(postsResponse.data.results)
   }
 
