@@ -35,7 +35,7 @@ export default function Home(){
                 />
             </HomeHeader>
             <HomeBody>
-                {posts.map((item) => {
+                {posts.slice(1).map((item) => {
                     return (
                         <Card
                             key={item.id}
