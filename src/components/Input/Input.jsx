@@ -1,8 +1,26 @@
 /* eslint-disable react/prop-types */
-import { InputSpace } from "./InputStyle";
+import { InputSpace, TextareaSpace } from "./InputStyle";
 
-export function Input({ type, placeholder, register, name }) {
+export function Input({ type, placeholder, register, name, isInput = true, value }) {
+  let inputProps = {
+    type,
+    placeholder,
+    ...register(name)
+  }
+
+  if(value) inputProps.value = value;
+
   return (
-    <InputSpace type={type} placeholder={placeholder} {...register(name)}/>
+    <>
+      {isInput ? (
+        <InputSpace
+          {...inputProps}
+        />
+      ) : (
+       <TextareaSpace
+        {...inputProps}
+      />
+      )}
+    </>
   );
 }
