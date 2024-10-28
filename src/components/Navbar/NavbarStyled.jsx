@@ -85,6 +85,10 @@ export const UserLoggedSpace = styled.div`
     color: #043546;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   i {
     font-size: 1.5rem;
     color: #0bade3;
