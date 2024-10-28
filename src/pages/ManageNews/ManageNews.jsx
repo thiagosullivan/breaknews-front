@@ -6,18 +6,19 @@ import { newsSchema } from "../../schemas/newsSchema";
 import { Input } from "../../components/Input/Input";
 import { ErrorSpan } from "../../components/Navbar/NavbarStyled";
 import { Button } from "../../components/Button/Button";
-import { createNews } from "../../services/postsServices";
+import { createNews, editNews, getNewsById } from "../../services/postsServices";
+import { useEffect } from "react";
 
 export function ManageNews() {
-  const { action } = useParams();
+  const { action, id } = useParams();
+  const navigate = useNavigate();
 
   const {
     register: registerNews,
     handleSubmit: handleRegisterNews,
     formState: { errors: errorsRegisterNews },
+    setValue,
   } = useForm({ resolver: zodResolver(newsSchema) });
-
-  const navigate = useNavigate();
 
   async function registerNewsSubmit(data){
     try {
@@ -27,6 +28,35 @@ export function ManageNews() {
         console.log(error);
     }
   }
+
+  async function editNewsSubmit(data){
+    try {
+        await editNews(data, id);
+        navigate("/profile");
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
+  async function getSpecificNews(id){
+    try {
+      const { data } = await getNewsById(id);
+      setValue("title", data.news.title)
+      setValue("banner", data.news.banner)
+      setValue("text", data.news.text)
+      console.log(data, 'VALUE')
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if( action === "edit" || action){
+      getSpecificNews(id)
+    }
+  }, [])
+
   return (
     <AddNewsContainer>
       <h2>{action == "add" ? "Adicionar" : "Atualizar"} Notícias</h2>
@@ -34,7 +64,7 @@ export function ManageNews() {
         onSubmit={
           action == "add"
             ? handleRegisterNews(registerNewsSubmit)
-            : handleRegisterNews()
+            : handleRegisterNews(editNewsSubmit)
         }
       >
         <Input
@@ -42,7 +72,6 @@ export function ManageNews() {
             placeholder="Titulo"
             name="title"
             register={registerNews}
-            value={action !== "add" ? "title" : ""}
         />
         {errorsRegisterNews.title && (
             <ErrorSpan>{errorsRegisterNews.title.message}</ErrorSpan>
@@ -51,8 +80,7 @@ export function ManageNews() {
             type="text"
             placeholder="Link da imagem"
             name="banner"
-            register={registerNews}
-            value={action !== "add" ? "title" : ""}
+            register={registerNews}            
         />
         {errorsRegisterNews.banner && (
             <ErrorSpan>{errorsRegisterNews.banner.message}</ErrorSpan>
@@ -63,7 +91,6 @@ export function ManageNews() {
             name="text"
             register={registerNews}
             isInput={false}
-            value={action !== "add" ? "title" : ""}
         />
         {errorsRegisterNews.text && (
             <ErrorSpan>{errorsRegisterNews.text.message}</ErrorSpan>
